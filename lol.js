@@ -1,9 +1,15 @@
 
 var request = require('request');
 
-setInterval(doThe, 10);
+setInterval(doThe, 100);
+
+var doers = 0;
 
 function doThe() {
+    if (doers > 100) {
+        return;
+    }
+    doers++;
     var jar = request.jar();
     request('http://www.nhhs.net/apps/classes/show_class.jsp?classREC_ID=618291', {
         jar: jar,
@@ -25,6 +31,7 @@ function doThe() {
         }, function (err, respinse, body) {
             if (err) throw err;
             console.log(JSON.stringify(body));
+            doers--;
         });
     });
 }
